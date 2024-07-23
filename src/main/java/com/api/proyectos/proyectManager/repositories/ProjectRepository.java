@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 
-    @Query("SELECT DISTINCT p FROM Proyect p LEFT JOIN FETCH p.team")
-    List<Project> findAllWithTeam();
+//    @Query("SELECT DISTINCT p FROM Proyect p LEFT JOIN FETCH p.team")
+//    List<Project> findAllWithTeam();
 
 
 

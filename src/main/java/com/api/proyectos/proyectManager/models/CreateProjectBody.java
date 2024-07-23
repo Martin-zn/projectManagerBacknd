@@ -9,10 +9,11 @@ import java.util.List;
 public class CreateProjectBody {
 
     private String name;
+    private String contraseña;
     private String description;
     private Date startDate;
     private Date endDate;
-
+    private List<String> roles;
     private List<Long> equipo;
 
     private List<Long> actividades;

@@ -1,9 +1,14 @@
 package com.api.proyectos.proyectManager.controllers;
 
+import com.api.proyectos.proyectManager.dto.AuthCreateUser;
+import com.api.proyectos.proyectManager.dto.AuthLoginRequest;
+import com.api.proyectos.proyectManager.dto.AuthResponse;
 import com.api.proyectos.proyectManager.entities.LocalUser;
+import com.api.proyectos.proyectManager.services.UserDetailService;
 import com.api.proyectos.proyectManager.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +18,32 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserDetailService userDetailService;
+
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> registerUser(@RequestBody @Valid AuthCreateUser authCreateUser){
+        return new ResponseEntity<>(this.userDetailService.regiterUser(authCreateUser), HttpStatus.OK);
+    }
+
+    @PostMapping("/log")
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest userRequest){
+        return new ResponseEntity<>(this.userDetailService.loginUser(userRequest), HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @PostMapping("/create")
     public ResponseEntity createUSer(@RequestBody LocalUser user){
