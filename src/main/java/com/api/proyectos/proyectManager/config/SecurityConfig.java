@@ -46,8 +46,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http->{
-                    http.requestMatchers(HttpMethod.POST, "/user/**").permitAll();
-                    http.requestMatchers(HttpMethod.GET, "/project").hasAuthority("UPDATE");
+                    http.requestMatchers(HttpMethod.POST, "/user/log", "/user/register").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/project/**").hasAuthority("CREATE");
+                    http.requestMatchers(HttpMethod.GET, "/activity/**").hasAuthority("CREATE");
                     http.anyRequest().authenticated();
                 })
                 .addFilterBefore(new JwtTokenVlidator(jwtUtils), BasicAuthenticationFilter.class)
@@ -60,8 +61,6 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
-
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailService userDetailService){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -69,19 +68,6 @@ public class SecurityConfig {
         provider.setUserDetailsService(userDetailService);
         return provider;
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        UserDetails userDetails = User.withUsername("martin")
-//                .password("1234")
-//                .roles("ADMIN")
-//                .authorities("READ", "CREATE")
-//                .build();
-//        return new InMemoryUserDetailsManager(userDetails);
-//    }
-
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder(){
