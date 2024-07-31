@@ -24,11 +24,13 @@ public class UserController {
 
 
     @PostMapping("/register")
+    @CrossOrigin("http://localhost:5173")
     public ResponseEntity<AuthResponse> registerUser(@RequestBody @Valid AuthCreateUser authCreateUser){
         return new ResponseEntity<>(this.userDetailService.regiterUser(authCreateUser), HttpStatus.OK);
     }
 
     @PostMapping("/log")
+    @CrossOrigin("http://localhost:5173")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest userRequest){
         return new ResponseEntity<>(this.userDetailService.loginUser(userRequest), HttpStatus.OK);
     }

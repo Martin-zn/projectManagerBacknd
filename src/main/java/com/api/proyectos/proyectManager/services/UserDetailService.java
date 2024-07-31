@@ -8,6 +8,7 @@ import com.api.proyectos.proyectManager.entities.RoleEntity;
 import com.api.proyectos.proyectManager.repositories.RoleRepository;
 import com.api.proyectos.proyectManager.repositories.UserRepository;
 import com.api.proyectos.proyectManager.util.JwtUtils;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -138,5 +139,11 @@ public class UserDetailService implements UserDetailsService {
 
         AuthResponse authResponse = new AuthResponse(userCreated.getUsername(), "Usuario creado exitosamente", accesToken, true );
         return authResponse;
+    }
+    public LocalUser findUserByJwt(String jwt){
+        DecodedJWT decode = jwtUtils.validateToken(jwt);
+        String username = jwtUtils.extractUsername(decode);
+        LocalUser user = userRepository.findByUsername(username).get();
+        return user;
     }
 }

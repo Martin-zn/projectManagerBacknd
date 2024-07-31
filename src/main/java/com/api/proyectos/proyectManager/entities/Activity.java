@@ -21,6 +21,9 @@ public class Activity {
     private String name;
     private String description;
 
+    @Column(columnDefinition = "varchar(255) default 'pendiente'")
+    private String estado;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "project_id")

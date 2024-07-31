@@ -41,13 +41,15 @@ public class ProjectService {
         project.setTeam(users);
 
         List<Activity> activities = projectBody.getActividades().stream()
-                .map(id-> activityRepository.findById(id).orElseThrow(() -> new  RuntimeException("Activity not found with id: " + id)))
+                .map(activityBody -> {
+                    Activity activity = new Activity();
+                    activity.setName(activityBody.getName());
+                    activity.setDescription(activityBody.getDescription());
+                    activity.setEstado("pendiente");
+                    activity.setProject(project);
+                    return activity;
+                })
                 .collect(Collectors.toList());
-
-        // Establecer la relación bidireccional
-        for (Activity activity : activities) {
-            activity.setProject(project);
-        }
 
         project.setActivities(activities);
 
@@ -58,6 +60,11 @@ public class ProjectService {
     public List<Project> allProjects() {
         return (List<Project>) projectRepository.findAll();
     }
+    @Transactional(readOnly = true)
+    public List<Project> allMyProjects(LocalUser user) {
+        return (List<Project>) projectRepository.findProjectsByUserId(user.getId());
+    }
+
 
     public Project findProject(Long id){
         return projectRepository.findById(id).get();

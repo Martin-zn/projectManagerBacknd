@@ -28,6 +28,6 @@ public class Project {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<LocalUser> team;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Activity> activities;
 }

@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http->{
+//                    http.requestMatchers(HttpMethod.GET, "/project").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/user/log", "/user/register").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/project/**").hasAuthority("CREATE");
                     http.requestMatchers(HttpMethod.GET, "/activity/**").hasAuthority("CREATE");

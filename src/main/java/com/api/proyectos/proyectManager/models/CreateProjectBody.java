@@ -15,6 +15,5 @@ public class CreateProjectBody {
     private Date endDate;
     private List<String> roles;
     private List<Long> equipo;
-
-    private List<Long> actividades;
+    private List<ActivityBody> actividades;
 }
